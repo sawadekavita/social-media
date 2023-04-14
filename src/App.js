@@ -1,23 +1,55 @@
-import logo from './logo.svg';
 import './App.css';
+import  {createBrowserRouter,RouterProvider,Route,Outlet} from 'react-router-dom'
+import Home from './pages/Home/Home';
+import Navbar from './components/Navbar/Navbar';
+import LeftBar from './components/LeftBar/LeftBar';
+import RightBar from './components/RightBar/RightBar';
+import Profile from './pages/Profile/Profile';
+import { dark } from '@mui/material/styles/createPalette';
+
 
 function App() {
+const Layout=()=>{
+ <div className='theme-dark'></div>
+  return(
+    <div>
+      <Navbar />
+      <div style={{display:"flex"}}>
+        <LeftBar  />
+        <div style={{flex:6,paddingLeft:"40px"}}>
+        <Outlet />
+
+        </div>
+        <RightBar />
+      </div>
+    </div>
+  )
+}
+      
+const router = createBrowserRouter ([
+  {
+    path : "/",
+    element:<Layout />,
+    children:[
+      {
+        path : "/",
+        element:<Home />
+      },
+      {
+        path : "/Profile/:id",
+        element:<Profile  />
+      },
+    ]
+  },
+  
+])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+<RouterProvider router={router}/>
+
+
     </div>
   );
 }
